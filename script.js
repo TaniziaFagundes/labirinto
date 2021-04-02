@@ -53,7 +53,7 @@ function criarLab(){
                 //CRIAR DIV START
                 var newdiv = document.createElement("div");
                 newdiv.id = "inicio"
-                newdiv.style.backgroundColor = "green"
+                newdiv.style.backgroundColor = "white"
                 newdiv.style.width = largura + "px";;
                 newdiv.style.height = altura + "px";
 
@@ -99,7 +99,6 @@ criarYoda()
 
 function movimentoPermitido(linha,coluna){
     let permisao;
-    console.log(map[linha][coluna])
        if( map[linha][coluna] !="W" && map[linha][coluna] !=null){
            permisao =  true;
        }else{
@@ -108,15 +107,35 @@ function movimentoPermitido(linha,coluna){
      return permisao;
 }
 
+function FimJogo(){
+    if(map[posicao_Linha][posicao_Coluna] == "F"){
+        let element_pai = document.getElementById("labirinto");
+        let fimjogo = document.createElement("div");
+        let conteudo  = document.createTextNode("Parabéns, Yoda Agradece Pelo Lanche !!!");
+        let button = document.createElement("button");
+        button.onclick = function(){window.location.reload()}
+        button.innerHTML="Jogar Novamente"
+        fimjogo.className = "fimjogo"
+        fimjogo.appendChild(conteudo);
+        fimjogo.appendChild(button);
+        element_pai.appendChild(fimjogo)
+
+    }
+}
+
+
+
+
+
 document.addEventListener("keydown", (event)=>{
     let keyName = event.key;
-    
+    let yoda = document.getElementById("yoda");
 
         if(keyName == "ArrowLeft"){
 
             posicao_Coluna -= 1;
             if(movimentoPermitido(posicao_Linha,posicao_Coluna) == true){
-                document.getElementById("yoda").style.marginLeft = (left-=30) + "px";
+                yoda.style.marginLeft = (left-=30) + "px";
             }else{
                 posicao_Coluna += 1;
             }
@@ -125,21 +144,18 @@ document.addEventListener("keydown", (event)=>{
 
             posicao_Coluna += 1;
             if(movimentoPermitido(posicao_Linha,posicao_Coluna) == true){
-                document.getElementById("yoda").style.position = "relative";
-                document.getElementById("yoda").style.marginLeft = (left+=30) + "px";
+                yoda.style.position = "relative";
+                yoda.style.marginLeft = (left+=30) + "px";
             }else{
                 posicao_Coluna -= 1;
             }
               
         }
-        //essa parte esta bugado
         if(keyName == "ArrowDown"){
 
             posicao_Linha += 1;
-            console.log(movimentoPermitido(posicao_Linha,posicao_Coluna))
             if(movimentoPermitido(posicao_Linha,posicao_Coluna) == true){
-                console.log("areadown");
-                document.getElementById("yoda").style.marginTop = (topdiv+=30) + "px";
+                yoda.style.marginTop = (topdiv+=30) + "px";
             }else{
                 posicao_Linha -= 1;
             }
@@ -149,12 +165,12 @@ document.addEventListener("keydown", (event)=>{
             
             posicao_Linha -= 1;
             if(movimentoPermitido(posicao_Linha,posicao_Coluna) == true){
-                document.getElementById("yoda").style.marginTop = (topdiv-=30) + "px";
+                yoda.style.marginTop = (topdiv-=30) + "px";
             }else{
                 posicao_Linha += 1;
             }
         }   
-
+        FimJogo()
     
 })
 
